@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"reflect"
 	"strings"
@@ -37,20 +38,7 @@ func decrypt(key string, byts []byte) ([]byte, error) {
 	return decrypted, nil
 }
 
-func loadFromFile(fpath string, conf *Conf) (bool, error) {
-	// rtsp-simple-server.yml is optional
-	// other configuration files are not
-	if fpath == "rtsp-simple-server.yml" {
-		if _, err := os.Stat(fpath); err != nil {
-			return false, nil
-		}
-	}
-
-	byts, err := os.ReadFile(fpath)
-	if err != nil {
-		return true, err
-	}
-
+func loadFromBytes(byts []byte, conf *Conf) (isOk bool, err error) {
 	if key, ok := os.LookupEnv("RTSP_CONFKEY"); ok {
 		byts, err = decrypt(key, byts)
 		if err != nil {
@@ -165,6 +153,23 @@ func loadFromFile(fpath string, conf *Conf) (bool, error) {
 	return true, nil
 }
 
+func loadFromFile(fpath string, conf *Conf) (bool, error) {
+	// rtsp-simple-server.yml is optional
+	// other configuration files are not
+	if fpath == "rtsp-simple-server.yml" {
+		if _, err := os.Stat(fpath); err != nil {
+			return false, nil
+		}
+	}
+
+	byts, err := os.ReadFile(fpath)
+	if err != nil {
+		return true, err
+	}
+
+	return loadFromBytes(byts, conf)
+}
+
 // Conf is a configuration.
 type Conf struct {
 	// general
@@ -236,6 +241,27 @@ func Load(fpath string) (*Conf, bool, error) {
 	}
 
 	err = loadFromEnvironment("RTSP", conf)
+	if err != nil {
+		return nil, false, err
+	}
+
+	err = conf.CheckAndFillMissing()
+	if err != nil {
+		return nil, false, err
+	}
+
+	return conf, found, nil
+}
+
+func LoadFromReader(reader io.Reader) (*Conf, bool, error) {
+	conf := &Conf{}
+
+	byts, err := io.ReadAll(reader)
+	if err != nil {
+		return nil, false, err
+	}
+
+	found, err := loadFromBytes(byts, conf)
 	if err != nil {
 		return nil, false, err
 	}

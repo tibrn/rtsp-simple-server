@@ -4,6 +4,7 @@ package core
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"os/signal"
 	"reflect"
@@ -82,6 +83,47 @@ func New(args []string) (*Core, bool) {
 
 	var err error
 	p.conf, p.confFound, err = conf.Load(p.confPath)
+	if err != nil {
+		fmt.Printf("ERR: %s\n", err)
+		return nil, false
+	}
+
+	err = p.createResources(true)
+	if err != nil {
+		if p.logger != nil {
+			p.Log(logger.Error, "%s", err)
+		} else {
+			fmt.Printf("ERR: %s\n", err)
+		}
+		p.closeResources(nil, false)
+		return nil, false
+	}
+
+	go p.run()
+
+	return p, true
+}
+
+// New allocates a core.
+func NewSimple(reader io.Reader) (*Core, bool) {
+	// on Linux, try to raise the number of file descriptors that can be opened
+	// to allow the maximum possible number of clients
+	// do not check for errors
+	rlimit.Raise()
+
+	gin.SetMode(gin.ReleaseMode)
+
+	ctx, ctxCancel := context.WithCancel(context.Background())
+
+	p := &Core{
+		ctx:            ctx,
+		ctxCancel:      ctxCancel,
+		chAPIConfigSet: make(chan *conf.Conf),
+		done:           make(chan struct{}),
+	}
+
+	var err error
+	p.conf, p.confFound, err = conf.LoadFromReader(reader)
 	if err != nil {
 		fmt.Printf("ERR: %s\n", err)
 		return nil, false
@@ -405,7 +447,7 @@ func (p *Core) createResources(initial bool) error {
 		}
 	}
 
-	if initial && p.confFound {
+	if initial && p.confFound && p.confPath != "" {
 		p.confWatcher, err = confwatcher.New(p.confPath)
 		if err != nil {
 			return err
