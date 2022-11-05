@@ -1,4 +1,4 @@
-package rtspsimpleserver
+package pkg
 
 import "github.com/tibrn/rtsp-simple-server/internal/core"
 
