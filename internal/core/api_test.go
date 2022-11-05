@@ -17,7 +17,7 @@ import (
 	"github.com/aler9/gortsplib/pkg/mpeg4audio"
 	"github.com/stretchr/testify/require"
 
-	"github.com/aler9/rtsp-simple-server/internal/rtmp"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp"
 )
 
 func httpRequest(method string, ur string, in interface{}, out interface{}) error {

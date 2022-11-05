@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aler9/rtsp-simple-server/internal/hls/mpegtstimedec"
+	"github.com/tibrn/rtsp-simple-server/internal/hls/mpegtstimedec"
 )
 
 type clientTimeSyncMPEGTS struct {

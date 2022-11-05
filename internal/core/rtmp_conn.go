@@ -16,12 +16,12 @@ import (
 	"github.com/aler9/gortsplib/pkg/ringbuffer"
 	"github.com/notedit/rtmp/format/flv/flvio"
 
-	"github.com/aler9/rtsp-simple-server/internal/conf"
-	"github.com/aler9/rtsp-simple-server/internal/externalcmd"
-	"github.com/aler9/rtsp-simple-server/internal/logger"
-	"github.com/aler9/rtsp-simple-server/internal/rtmp"
-	"github.com/aler9/rtsp-simple-server/internal/rtmp/h264conf"
-	"github.com/aler9/rtsp-simple-server/internal/rtmp/message"
+	"github.com/tibrn/rtsp-simple-server/internal/conf"
+	"github.com/tibrn/rtsp-simple-server/internal/externalcmd"
+	"github.com/tibrn/rtsp-simple-server/internal/logger"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp/h264conf"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp/message"
 )
 
 const (

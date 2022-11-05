@@ -8,8 +8,8 @@ import (
 	"github.com/aler9/gortsplib/pkg/h264"
 	"github.com/aler9/gortsplib/pkg/rtph264"
 
-	"github.com/aler9/rtsp-simple-server/internal/logger"
-	"github.com/aler9/rtsp-simple-server/internal/rpicamera"
+	"github.com/tibrn/rtsp-simple-server/internal/logger"
+	"github.com/tibrn/rtsp-simple-server/internal/rpicamera"
 )
 
 type rpiCameraSourceParent interface {

@@ -1,4 +1,4 @@
-module github.com/aler9/rtsp-simple-server
+module github.com/tibrn/rtsp-simple-server
 
 go 1.18
 

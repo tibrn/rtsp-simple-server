@@ -4,7 +4,7 @@ package rawmessage
 import (
 	"time"
 
-	"github.com/aler9/rtsp-simple-server/internal/rtmp/chunk"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp/chunk"
 )
 
 // Message is a raw message.

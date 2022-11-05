@@ -12,11 +12,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/aler9/rtsp-simple-server/internal/conf"
-	"github.com/aler9/rtsp-simple-server/internal/confwatcher"
-	"github.com/aler9/rtsp-simple-server/internal/externalcmd"
-	"github.com/aler9/rtsp-simple-server/internal/logger"
-	"github.com/aler9/rtsp-simple-server/internal/rlimit"
+	"github.com/tibrn/rtsp-simple-server/internal/conf"
+	"github.com/tibrn/rtsp-simple-server/internal/confwatcher"
+	"github.com/tibrn/rtsp-simple-server/internal/externalcmd"
+	"github.com/tibrn/rtsp-simple-server/internal/logger"
+	"github.com/tibrn/rtsp-simple-server/internal/rlimit"
 )
 
 var version = "v0.0.0"

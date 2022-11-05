@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aler9/rtsp-simple-server/internal/rtmp/bytecounter"
-	"github.com/aler9/rtsp-simple-server/internal/rtmp/chunk"
 	"github.com/stretchr/testify/require"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp/bytecounter"
+	"github.com/tibrn/rtsp-simple-server/internal/rtmp/chunk"
 )
 
 func TestWriter(t *testing.T) {
